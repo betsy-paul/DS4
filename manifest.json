@@ -1,0 +1,17 @@
+{
+  "manifest_version": 3,
+  "name": "20-20 Timer",
+  "version": "0.1.0",
+  "background": {
+    "service_worker": "js/background.js"
+  },
+  "short_name": "Work+Stretch",
+  "permissions": [
+    "tabs",
+    "storage",
+    "alarms"
+  ],
+  "action": {
+    "default_popup": "popup.html"
+  }
+}
