@@ -1,23 +1,32 @@
-// load URL of logo image
-// chrome.extension.getURL('/assets/reclogoa.png');
+let display; // Timer display element
+let isOn; // true or false
 
-let display; //timer display
-let isOn; //true or false
+function updateDisplay() {
+	// Ensure display element is correctly initialized
+	display = document.querySelector('#time');
+	if (!display) {
+		console.error("Element with ID 'time' not found.");
+	}
+}
 
-// check if extension on or off
+// Ensure display is updated when the user opens the extension
+window.onload = function () {
+	updateDisplay();
+};
+
+// Check if extension is on or off
 chrome.storage.local.get(['on'], function (result) {
 	if (result.on != null) {
 		if (!result.on) {
-			document.getElementById('checkbox1').checked = false; //off
+			document.getElementById('checkbox1').checked = false; // off
 			isOn = false;
-			display.textContent = 'turn on';
-			updateDisplay();
+			if (display) display.textContent = 'turn on'; // Safely access display
 		} else {
-			document.getElementById('checkbox1').checked = true; //on
+			document.getElementById('checkbox1').checked = true; // on
 			isOn = true;
 		}
 	} else {
-		//on auto on first launch
+		// Auto-on on first launch
 		chrome.storage.local.set({ on: true }, function () {
 			// console.log('On set to true.');
 		});
@@ -26,17 +35,15 @@ chrome.storage.local.get(['on'], function (result) {
 	}
 });
 
-// update on or off preference when clicked
+// Update on or off preference when clicked
 document.getElementById('checkbox1').onclick = function () {
 	if (document.getElementById('checkbox1').checked === false) {
 		chrome.storage.local.set({ on: false }, function () {
 			// console.log('On set to false.');
 		});
 		isOn = false;
-		display.textContent = 'turn on';
-		updateDisplay();
+		if (display) display.textContent = 'turn on'; // Safely access display
 	} else {
-		// currently says off
 		chrome.storage.local.set({ on: true }, function () {
 			// console.log('On set to true.');
 		});
@@ -44,46 +51,30 @@ document.getElementById('checkbox1').onclick = function () {
 	}
 };
 
-// listens for changes in timeLeft var from background.js timer & update display on inferface
+// Listen for changes in timeLeft from background.js and update the display
 chrome.storage.onChanged.addListener(function (changes, namespace) {
 	for (let key in changes) {
 		if (key === 'TIME_LEFT') {
-			//store all changes
 			let storageChange = changes[key];
-			time = storageChange.newValue;
-			if (isOn) {
-				if (time > 1500) {
-					//60, 1500
+			let time = storageChange.newValue;
+
+			if (isOn && display) {
+				if (time > 1200) {
 					display.textContent = 'stretch';
-					updateDisplay();
-				} else if (time <= 1500) {
-					//60, 1500
-					// convert newValue to time & seconds display
+				} else {
 					let minutes = Math.floor(time / 60);
 					let seconds = time % 60;
-					// pretty-print the time
+
+					// Pretty-print the time
 					function str_pad_left(string, pad, length) {
 						return (new Array(length + 1).join(pad) + string).slice(-length);
 					}
-					let finalTime =
-						str_pad_left(minutes, '0', 2) + ':' + str_pad_left(seconds, '0', 2);
-					//set display to new updated time
+					let finalTime = str_pad_left(minutes, '0', 2) + ':' + str_pad_left(seconds, '0', 2);
 					display.textContent = finalTime;
-					updateDisplay();
 				}
-			} else {
+			} else if (display) {
 				display.textContent = 'turn on';
-				updateDisplay();
 			}
 		}
 	}
 });
-
-//when user opens extension, update display
-window.onload = function () {
-	updateDisplay();
-};
-
-function updateDisplay() {
-	display = document.querySelector('#time');
-}
