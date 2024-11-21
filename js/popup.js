@@ -16,6 +16,7 @@ window.onload = function () {
 
 // Check if extension is on or off
 chrome.storage.local.get(['on'], function (result) {
+    updateDisplay()
 	if (result.on != null) {
 		if (!result.on) {
 			document.getElementById('checkbox1').checked = false; // off
