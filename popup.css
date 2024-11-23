@@ -20,11 +20,13 @@ body {
 }
 
 #time {
-	background: #95e1d3;
+	background: #e6d5c7;
+    padding: 2%;
+    margin: 4%;
+    border-radius: 8px;
 	margin-top: 2vw;
-	font-family: Verdana, Geneva, Tahoma, sans-serif;
-	font-weight: bolder;
-	font-size: 20vw;
+	font-family: sans-serif;
+	font-size: 10vw;
 	margin-bottom: 0vw;
 }
 
@@ -39,14 +41,14 @@ body {
 #mediumLink {
 	font-family: sans-serif;
 	font-size: small;
+    font-weight: 400;
     text-decoration: none;
-    background: #dddddd;
-    padding: 2%;
-    margin: 4%;
+    background: #e6d5c7;
+    padding: 2.4%;
     border-radius: 8px;
-    color: black;
+    color: rgb(86, 52, 24);
     box-shadow: 0 0 16px #dad3d3;
-    width: 300px;
+    width: 309px;
     text-align: center;
 }
 

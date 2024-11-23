@@ -5,5 +5,14 @@
     "version": "1.0",
     "action": {
       "default_popup": "popup.html"
-    }
+    },
+    "background": {
+      "service_worker": "js/background.js"
+    },
+    "short_name": "Triple Twenty",
+    "permissions": [
+      "tabs",
+      "storage",
+      "alarms"
+    ]
 }

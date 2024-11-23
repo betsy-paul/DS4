@@ -4,23 +4,37 @@
 let display; //timer display
 let isOn; //true or false
 
+function updateDisplay() {
+	//esnure display element is correctly set
+	display = document.querySelector('#time');
+	if (!display) {
+		console.error("Element with ID 'time' not found.");
+	}
+}
+
+//when user opens extension, update display
+window.onload = function () {
+	updateDisplay();
+};
+
+
 // check if extension on or off
 chrome.storage.local.get(['on'], function (result) {
+	updateDisplay()
 	if (result.on != null) {
 		if (!result.on) {
 			document.getElementById('checkbox1').checked = false; //off
 			isOn = false;
-			display.textContent = 'turn on';
-			updateDisplay();
+			if (display)  //access display
+				display.textContent = 'Turn on to see time';
 		} else {
 			document.getElementById('checkbox1').checked = true; //on
 			isOn = true;
 		}
-	} else {
-		//on auto on first launch
+	} else { //automatically on at first launch
 		chrome.storage.local.set({ on: true }, function () {
-			// console.log('On set to true.');
-		});
+		// console.log('On set to true.');
+	});
 		document.getElementById('checkbox1').checked = true;
 		isOn = true;
 	}
@@ -33,10 +47,9 @@ document.getElementById('checkbox1').onclick = function () {
 			// console.log('On set to false.');
 		});
 		isOn = false;
-		display.textContent = 'turn on';
-		updateDisplay();
+		if (display) 
+			display.textContent = 'Turn on to see time'; //access display
 	} else {
-		// currently says off
 		chrome.storage.local.set({ on: true }, function () {
 			// console.log('On set to true.');
 		});
@@ -44,18 +57,17 @@ document.getElementById('checkbox1').onclick = function () {
 	}
 };
 
-// listens for changes in timeLeft var from background.js timer & update display on inferface
+// listens for changes in timeLeft var from background.js timer & update display
 chrome.storage.onChanged.addListener(function (changes, namespace) {
 	for (let key in changes) {
 		if (key === 'TIME_LEFT') {
 			//store all changes
 			let storageChange = changes[key];
 			time = storageChange.newValue;
-			if (isOn) {
+			if (isOn && display) {
 				if (time > 1200) {
 					//60, 1200
 					display.textContent = 'stretch';
-					updateDisplay();
 				} else if (time <= 1200) {
 					//60, 1200
 					// convert newValue to time & seconds display
@@ -69,31 +81,11 @@ chrome.storage.onChanged.addListener(function (changes, namespace) {
 						str_pad_left(minutes, '0', 2) + ':' + str_pad_left(seconds, '0', 2);
 					//set display to new updated time
 					display.textContent = finalTime;
-					updateDisplay();
 				}
-			} else {
+			} else if (display) {
 				display.textContent = 'turn on';
-				updateDisplay();
 			}
-
-			//printing changes in console
-			// console.log(
-			// 	'Storage key "%s" in namespace "%s" changed. ' +
-			// 		'Old value was "%s", new value is "%s".',
-			// 	key,
-			// 	namespace,
-			// 	storageChange.oldValue,
-			// 	storageChange.newValue
-			// );
 		}
 	}
 });
 
-//when user opens extension, update display
-window.onload = function () {
-	updateDisplay();
-};
-
-function updateDisplay() {
-	display = document.querySelector('#time');
-}
