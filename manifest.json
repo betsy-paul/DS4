@@ -1,17 +1,18 @@
 {
-  "manifest_version": 3,
-  "name": "20-20 Timer",
-  "version": "0.1.0",
-  "background": {
-    "service_worker": "js/background.js"
-  },
-  "short_name": "Work+Stretch",
-  "permissions": [
-    "tabs",
-    "storage",
-    "alarms"
-  ],
-  "action": {
-    "default_popup": "popup.html"
-  }
+    "manifest_version": 3,
+    "name": "20-20-20",
+    "description": "Base Level Extension",
+    "version": "1.0",
+    "action": {
+      "default_popup": "popup.html"
+    },
+    "background": {
+      "service_worker": "js/background.js"
+    },
+    "short_name": "Triple Twenty",
+    "permissions": [
+      "tabs",
+      "storage",
+      "alarms"
+    ]
 }
