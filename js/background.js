@@ -44,9 +44,9 @@ chrome.storage.onChanged.addListener(function(changes, namespace) {
     }
 });
 function startAlarmAndNotif() {
-    freq = 20; //1, 25
+    freq = 1; //1, 25
     // console.log('set alarm freq to ' + freq);
-    timeLeft = 1200; //60, 1500
+    timeLeft = 60; //60, 1500
     createAlarm(freq);
 }
 function createAlarm(freq) {
