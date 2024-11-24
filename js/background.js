@@ -75,24 +75,36 @@ chrome.alarms.onAlarm.addListener(function(alarm) {
     });
 });
 function openNotification() {
-    var popupUrl = chrome.runtime.getURL('/notification.html');
-    chrome.tabs.query({
-        url: popupUrl
-    }, function(tabs) {
-        if (tabs.length > 0) {
-            // remove last exercise tab if haven't closed
-            chrome.tabs.remove(tabs[0].id);
-        }
-        // creates a new notif popup window
-        chrome.windows.create({
-            url: 'notification.html',
-            type: 'popup',
-            width: 1200,
-            height: 750,
-            top: 20,
-            left: 20,
-        });
-    });
+    //var popupUrl = chrome.runtime.getURL('/notification.html');
+    //chrome.tabs.query({
+     //   url: popupUrl
+  //  }, 
+        chrome.tabs.query({active:true, currentWindow:true}, function(tabs) {
+            if (tabs.length > 0){
+                // api call function to locate given tab and adjust brightness 
+                chrome.scripting.executeScript({
+                    target: {tabId: tabs[0].id, allFrames:true},
+                    func: () => {
+                        document.documentElement.style.filter = 'brightness(50%)';
+                        document.documentElement.style.transition = 'filter 0.5s ease';
+                    }
+                })
+            }
+        })
+    // );
+        // if (tabs.length > 0) {
+        //     // remove last exercise tab if haven't closed
+        //     chrome.tabs.remove(tabs[0].id);
+        // }
+        // // creates a new notif popup window
+        // chrome.windows.create({
+        //     url: 'notification.html',
+        //     type: 'popup',
+        //     width: 1200,
+        //     height: 750,
+        //     top: 20,
+        //     left: 20,
+        // });
 }
 // Start a background timer seperate from the chrome alarm for front-end
 function startBackgroundTimer() {

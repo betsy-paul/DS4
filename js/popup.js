@@ -67,19 +67,7 @@ chrome.storage.onChanged.addListener(function (changes, namespace) {
 			if (isOn && display) {
 				if (time >= 60) {
 					//60, 1200
-					chrome.tabs.query({active:true, currentWindow: true}, function(tabs) {
-						if (tabs.length > 0){
-							// api call function to locate given tab and adjust brightness 
-							chrome.scripting.executeScript({
-								target: {tabId: tabs[0].id},
-								func: () => {
-									document.body.style.filter = 'brightness(50%)';
-									document.body.style.transition = 'filter 0.5s ease';
-								}
-							}
-							)
-						}
-					});
+					console.log("nothing here")
 				} else if (time < 60) {
 					//60, 1200
 					// convert newValue to time & seconds display
