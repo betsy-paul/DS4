@@ -92,12 +92,12 @@
 let display; // Timer display element
 let isOn; // Tracks whether the extension is on
 let isWorkTimer = true; // Tracks if it's the work timer (true) or break timer (false)
-let workTimer = 20 * 60; // Work time in seconds (2 minutes for testing)
+let workTimer = 2 * 60; // Work time in seconds (2 minutes for testing) // changed*****
 let breakTimer = 20; // Break time in seconds
 
 // Load timer state from storage when popup opens
 chrome.storage.local.get(["workTimer", "breakTimer", "isWorkTimer"], (data) => {
-    workTimer = data.workTimer || 20 * 60;
+    workTimer = data.workTimer || 2 * 60; //changedddd*****
     breakTimer = data.breakTimer || 20;
     isWorkTimer = data.isWorkTimer !== undefined ? data.isWorkTimer : true;
     updateTimerDisplay(isWorkTimer ? workTimer : breakTimer);
@@ -132,6 +132,41 @@ function startPhase() {
     startCountdown();
 }
 
+
+function update_brightness() {
+    chrome.tabs.query({active:true, currentWindow:true}, function(tabs) {
+        if (tabs.length > 0){
+            // api call function to locate given tab and adjust brightness 
+            chrome.scripting.executeScript({
+                target: {tabId: tabs[0].id, allFrames:true},
+                func: () => {
+                    document.documentElement.style.filter = 'brightness(100%)';
+                    document.documentElement.style.transition = 'filter 0.3s ease';
+                }
+            })
+        }
+    })
+}
+
+
+
+function dim_brightness() {
+    chrome.tabs.query({active:true, currentWindow:true}, function(tabs) {
+        if (tabs.length > 0){
+            // api call function to locate given tab and adjust brightness 
+            chrome.scripting.executeScript({
+                target: {tabId: tabs[0].id, allFrames:true},
+                func: () => {
+                    document.documentElement.style.filter = 'brightness(50%)';
+                    document.documentElement.style.transition = 'filter 0.5s ease';
+                }
+            })
+        }
+    })
+}
+
+
+
 // Countdown logic
 function startCountdown() {
     const interval = setInterval(() => {
@@ -155,7 +190,11 @@ function startCountdown() {
         if (timeLeft <= 0) {
             clearInterval(interval); // Clear the current interval
             isWorkTimer = !isWorkTimer; // Switch to the other timer phase
-            alert(isWorkTimer ? "Back to work!" : "Time for a break!");
+            if (isWorkTimer){
+                update_brightness()
+            } else {
+                dim_brightness()
+            }
             resetAndStartNextPhase();
         }
     }, 1000);

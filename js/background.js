@@ -123,7 +123,7 @@ function startBackgroundTimer() {
 
         if (timeLeft <= 0) {
             // Resets timer, with 30 minutes for stretch
-            timeLeft = 1800; // Example: 30 minutes
+            timeLeft = 1800; // Example: 30 minutes changed*****
         }
     }
 }
