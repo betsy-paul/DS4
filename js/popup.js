@@ -92,12 +92,12 @@
 let display; // Timer display element
 let isOn; // Tracks whether the extension is on
 let isWorkTimer = true; // Tracks if it's the work timer (true) or break timer (false)
-let workTimer = 2 * 60; // Work time in seconds (2 minutes for testing) // changed*****
+let workTimer = 1 * 60; // Work time in seconds (2 minutes for testing) // changed*****
 let breakTimer = 20; // Break time in seconds
 
 // Load timer state from storage when popup opens
 chrome.storage.local.get(["workTimer", "breakTimer", "isWorkTimer"], (data) => {
-    workTimer = data.workTimer || 2 * 60; //changedddd*****
+    workTimer = data.workTimer || 1 * 60; //changedddd*****
     breakTimer = data.breakTimer || 20;
     isWorkTimer = data.isWorkTimer !== undefined ? data.isWorkTimer : true;
     updateTimerDisplay(isWorkTimer ? workTimer : breakTimer);
@@ -190,6 +190,7 @@ function startCountdown() {
         if (timeLeft <= 0) {
             clearInterval(interval); // Clear the current interval
             isWorkTimer = !isWorkTimer; // Switch to the other timer phase
+            alert(isWorkTimer ? "Back to work!" : "Time for a break!");
             if (isWorkTimer){
                 update_brightness()
             } else {
@@ -204,7 +205,7 @@ function startCountdown() {
 function resetAndStartNextPhase() {
     // Reset the appropriate timer
     if (isWorkTimer) {
-        workTimer = 2 * 60; // Reset work timer to 2 minutes
+        workTimer = 1 * 60; // Reset work timer to 2 minutes
     } else {
         breakTimer = 20; // Reset break timer to 20 seconds
     }
