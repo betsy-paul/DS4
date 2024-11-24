@@ -63,6 +63,32 @@ function createAlarm(freq) {
     });
     // console.log('New chrome alarm set at ' + freq + ' minutes');
 }
+
+function openNotification() {
+    // Create the popup window
+    chrome.windows.create({
+        url: chrome.runtime.getURL('/notification.html'),
+        type: 'popup',
+        width: 25,
+        height: 30,
+        left: screen.availWidth - 320, // Adjust based on the popup's size
+        top: 50,
+        position: relative,
+
+    }, function(newWindow) {
+        // Query open windows to check if there's an existing notification popup
+        chrome.windows.getAll({ windowTypes: ['popup'] }, function(windows) {
+            // Check if there's already a notification popup open
+            for (let win of windows) {
+                if (win.id !== newWindow.id) {
+                    // Close any other notification windows
+                    chrome.windows.remove(win.id);
+                }
+            }
+        });
+    });
+}
+
 // listen for alarm and open the notif popup
 chrome.alarms.onAlarm.addListener(function(alarm) {
     openNotification();
@@ -74,26 +100,7 @@ chrome.alarms.onAlarm.addListener(function(alarm) {
         periodInMinutes: 30, //2, 30
     });
 });
-function openNotification() {
-    var popupUrl = chrome.runtime.getURL('/notification.html');
-    chrome.tabs.query({
-        url: popupUrl
-    }, function(tabs) {
-        if (tabs.length > 0) {
-            // remove last exercise tab if haven't closed
-            chrome.tabs.remove(tabs[0].id);
-        }
-        // creates a new notif popup window
-        chrome.windows.create({
-            url: 'notification.html',
-            type: 'popup',
-            width: 1200,
-            height: 750,
-            top: 20,
-            left: 20,
-        });
-    });
-}
+
 // Start a background timer seperate from the chrome alarm for front-end
 function startBackgroundTimer() {
     //clear the last timer

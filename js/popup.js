@@ -1,5 +1,4 @@
 // load URL of logo image
-// chrome.extension.getURL('/assets/reclogoa.png');
 
 let display; //timer display
 let isOn; //true or false
@@ -17,6 +16,7 @@ window.onload = function () {
 	updateDisplay();
 };
 
+//------------------------chrome.browserAction.setIcon({ path: "my-icon.png" });
 
 // check if extension on or off
 chrome.storage.local.get(['on'], function (result) {
@@ -67,7 +67,7 @@ chrome.storage.onChanged.addListener(function (changes, namespace) {
 			if (isOn && display) {
 				if (time > 1200) {
 					//60, 1200
-					display.textContent = 'stretch';
+					display.textContent = 'break';
 				} else if (time <= 1200) {
 					//60, 1200
 					// convert newValue to time & seconds display

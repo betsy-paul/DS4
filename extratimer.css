@@ -1,0 +1,86 @@
+body {
+	min-width: 250px;
+	max-width: 300px;
+	position: relative;
+	vertical-align: middle;
+    background: #f4ecec;
+}
+
+#logoImage {
+	width: 95%;
+	height: 20%;
+    align-items: 50%;
+}
+
+#timerLabel {
+	margin-bottom: 0.5vw;
+	font-family: sans-serif;
+	font-size: medium;
+	font-weight: lighter;
+	margin-top: 10vw;
+}
+
+#time {
+	background: #e6d5c7;
+    padding: 2%;
+    margin: 4%;
+    border-radius: 8px;
+	margin-top: 2vw;
+	font-family: sans-serif;
+	font-size: 10vw;
+	margin-bottom: 0vw;
+}
+
+#minuteLabel {
+	margin-top: 0vw;
+	font-family: sans-serif;
+	font-size: small;
+	font-weight: lighter;
+	margin-bottom: 10vw;
+}
+
+#mediumLinkn {
+	font-family: sans-serif;
+	font-size: small;
+    font-weight: 400;
+    background: #e6d5c7;
+    padding: 2.4%;
+    border-radius: 8px;
+    color: rgb(0, 0, 0);
+    box-shadow: 0 0 16px #dad3d3;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+#content{
+    background: #f4ecec;
+}
+
+#timer {
+    font-size: 24px;
+    color: rgb(0, 0, 6); 
+    background: #e6d5c7;
+    padding: 2%;
+    border-radius: 8px;
+	margin-top: 2vw;
+	font-family: sans-serif;
+	margin-bottom: 0vw;
+}
+
+#rest-eyes {
+    font-size: 18px; 
+    font-weight: bold;
+    color: rgb(8, 5, 0); 
+}
+
+#startTimerButton{
+    font-family: "Times New Roman", Times, serif;
+    padding: 2.4%;
+    margin: 1%;
+    background-color: #e6d5c7;
+    text-align: center;
+    border-radius: 8px;
+}
