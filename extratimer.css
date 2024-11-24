@@ -1,6 +1,31 @@
-body {
-	min-width: 250px;
-	max-width: 300px;
+html, body {
+    height: 100%; /* Ensure both the html and body occupy full height */
+    width: 100%;  /* Ensure the body takes up full width */
+    margin: 0;    /* Remove any margin */
+    padding: 0;   /* Remove any padding */
+    overflow: hidden; /* Prevent content from overflowing */
+    box-sizing: border-box; /* Ensure no extra space is added due to borders or padding */
+}
+
+#content {
+    height: 100%; /* Take up the full height of the page */
+    width: 100%;  /* Take up the full width of the page */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    box-sizing: border-box; /* Ensure padding doesn't overflow */
+}
+
+#logoImage {
+    max-width: 100%; /* Make sure the logo doesn't stretch the page */
+    height: auto;
+}
+
+/* body {
+	min-width: 20%;
+	max-width: 30%;
 	position: relative;
 	vertical-align: middle;
     background: #f4ecec;
@@ -11,7 +36,7 @@ body {
 	height: 20%;
     align-items: 50%;
 }
-
+*/
 #timerLabel {
 	margin-bottom: 0.5vw;
 	font-family: sans-serif;

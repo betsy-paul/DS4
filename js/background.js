@@ -68,13 +68,12 @@ function createAlarm(freq) {
 function openNotification() {
     // Create the popup window
     chrome.windows.create({
-        url: chrome.runtime.getURL('html/notification.html'),
+        url: chrome.runtime.getURL('notification.html'),
         type: 'popup',
-        width: 25,
-        height: 30,
-        left: screen.availWidth - 320, // Adjust based on the popup's size
+        width: 400,
+        height: 300,
+        left: screen.availWidth - 420, // Adjust based on the popup's size
         top: 50,
-        position: relative,
 
     }, function(newWindow) {
         // Query open windows to check if there's an existing notification popup
