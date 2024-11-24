@@ -49,6 +49,7 @@ function startAlarmAndNotif() {
     timeLeft = 1200; //60, 1500
     createAlarm(freq);
 }
+
 function createAlarm(freq) {
     // start the background timer
     startBackgroundTimer();
@@ -67,7 +68,7 @@ function createAlarm(freq) {
 function openNotification() {
     // Create the popup window
     chrome.windows.create({
-        url: chrome.runtime.getURL('/notification.html'),
+        url: chrome.runtime.getURL('html/notification.html'),
         type: 'popup',
         width: 25,
         height: 30,
