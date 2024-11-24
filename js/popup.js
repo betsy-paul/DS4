@@ -157,7 +157,7 @@ function dim_brightness() {
             chrome.scripting.executeScript({
                 target: {tabId: tabs[0].id, allFrames:true},
                 func: () => {
-                    document.documentElement.style.filter = 'brightness(50%)';
+                    document.documentElement.style.filter = 'brightness(70%)';
                     document.documentElement.style.transition = 'filter 0.5s ease';
                 }
             })
@@ -165,7 +165,10 @@ function dim_brightness() {
     })
 }
 
-
+function playAlertSound() {
+    const audio = new Audio(chrome.runtime.getURL("assets/alert-sound.mp3"));
+    audio.play().catch((error) => console.error("Error playing sound:", error));
+}
 
 // Countdown logic
 function startCountdown() {
@@ -190,7 +193,14 @@ function startCountdown() {
         if (timeLeft <= 0) {
             clearInterval(interval); // Clear the current interval
             isWorkTimer = !isWorkTimer; // Switch to the other timer phase
-            alert(isWorkTimer ? "Back to work!" : "Time for a break!");
+
+            playAlertSound(); // Play the alert sound first
+
+            // Add a slight delay before showing the alert
+            setTimeout(() => {
+                alert(isWorkTimer ? "Back to work!" : "Time for a break!");
+            }, 500); // Delay by 500ms to allow sound to play slightly ahead
+
             if (isWorkTimer){
                 update_brightness()
             } else {

@@ -16,5 +16,11 @@
       "storage",
       "alarms",
       "scripting"
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": ["assets/alert-sound.mp3"],
+            "matches": ["<all_urls>"]
+        }
     ]
 }
