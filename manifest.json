@@ -1,0 +1,26 @@
+{
+    "manifest_version": 3,
+    "name": "20-20-20-MAY-original",
+    "description": "Base Level Extension",
+    "version": "1.0",
+    "host_permissions": ["<all_urls>"],
+    "action": {
+      "default_popup": "popup.html"
+    },
+    "background": {
+      "service_worker": "js/background.js"
+    },
+    "short_name": "Triple Twenty",
+    "permissions": [
+      "tabs",
+      "storage",
+      "alarms",
+      "scripting"
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": ["assets/alert-sound.mp3"],
+            "matches": ["<all_urls>"]
+        }
+    ]
+}
